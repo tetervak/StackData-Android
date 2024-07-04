@@ -22,12 +22,15 @@ import androidx.compose.material.icons.filled.ArrowDownward
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -39,6 +42,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -50,21 +54,39 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ca.tetervak.stackdata.R
 import ca.tetervak.stackdata.domain.StackItem
+import ca.tetervak.stackdata.ui.common.StackDataTopBar
 import ca.tetervak.stackdata.ui.theme.StackDataTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StackScreen(
+    modifier: Modifier = Modifier,
     viewModel: StackViewModel = viewModel(),
-    modifier: Modifier = Modifier
+    onHelpButtonClick: () -> Unit = {}
 ){
     val state: State<StackUiState> = viewModel.stackUiState.collectAsState()
     val itemList: List<StackItem> = state.value.items
 
-    StackScreenBody(onPush = { viewModel.push(it) },
-        onPop = { viewModel.pop() },
-        itemList = itemList,
-        modifier = modifier
-    )
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    Scaffold(
+        topBar = {
+            StackDataTopBar(
+                onHelpButtonClick = onHelpButtonClick,
+                scrollBehavior = scrollBehavior
+            )
+        },
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(scrollBehavior.nestedScrollConnection)
+    ){ innerPadding ->
+        StackScreenBody(onPush = { viewModel.push(it) },
+            onPop = { viewModel.pop() },
+            itemList = itemList,
+            modifier = modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+        )
+    }
 }
 
 
@@ -85,11 +107,6 @@ fun StackScreenBody(
             .fillMaxSize()
             .padding(all = 32.dp)
     ) {
-        Text(
-            text = stringResource(R.string.stack_demo_title),
-            fontSize = 48.sp,
-            color = colorResource(id = R.color.pink_700)
-        )
         StackValueInputOutput(
             value = input,
             onChange = { input = it },
@@ -113,8 +130,9 @@ fun StackScreenBody(
                 .width(width = 256.dp)
                 .padding(top = 24.dp)
         )
-        Divider(
-            color = Color.Gray, thickness = 2.dp, modifier = Modifier.padding(top = 24.dp)
+        HorizontalDivider(
+            modifier = Modifier.padding(top = 24.dp),
+            thickness = 2.dp, color = Color.Gray
         )
         if (itemList.isNotEmpty()) {
             StackContent(
@@ -141,8 +159,9 @@ fun StackScreenBody(
                 )
             }
         }
-        Divider(
-            color = Color.Gray, thickness = 2.dp
+        HorizontalDivider(
+            thickness = 2.dp,
+            color = Color.Gray
         )
     }
 }

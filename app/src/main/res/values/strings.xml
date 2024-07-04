@@ -1,9 +1,12 @@
 <resources>
     <string name="app_name">Stack Data</string>
-
     <string name="stack_demo_title">Stack Demo</string>
     <string name="push_button_label">Push</string>
     <string name="pop_button_label">Pop</string>
     <string name="input_output_label">Input / Output</string>
     <string name="stack_empty_message">The Stack is Empty</string>
+    <string name="about">About</string>
+    <string name="about_stack_data">About Stack Data</string>
+    <string name="programming_example">This is a programming example from an Android application development course.</string>
+    <string name="ok">OK</string>
 </resources>
