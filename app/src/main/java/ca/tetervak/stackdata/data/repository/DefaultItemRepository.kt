@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-class DefaultStackItemRepository(
+class DefaultItemRepository(
     private val source: DefaultStackDataSource
-): StackItemRepository {
+): ItemRepository {
     // the first item of the list is the top of the stack
     override fun getStackItems(): Flow<List<StackItem>> = source.getItemsFlow().map { list ->
         buildList(list.size) {

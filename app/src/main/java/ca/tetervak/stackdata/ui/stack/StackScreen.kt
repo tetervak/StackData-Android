@@ -54,6 +54,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ca.tetervak.stackdata.R
 import ca.tetervak.stackdata.domain.StackItem
+import ca.tetervak.stackdata.ui.AppViewModelProvider
 import ca.tetervak.stackdata.ui.common.StackDataTopBar
 import ca.tetervak.stackdata.ui.theme.StackDataTheme
 
@@ -61,7 +62,7 @@ import ca.tetervak.stackdata.ui.theme.StackDataTheme
 @Composable
 fun StackScreen(
     modifier: Modifier = Modifier,
-    viewModel: StackViewModel = viewModel(),
+    viewModel: StackViewModel = viewModel(factory = AppViewModelProvider.Factory),
     onHelpButtonClick: () -> Unit = {}
 ){
     val state: State<StackUiState> = viewModel.stackUiState.collectAsState()
