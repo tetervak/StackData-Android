@@ -64,10 +64,10 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.material.icons.extended)
 
-    implementation(libs.room)
-    implementation(libs.room.runtime)
-    annotationProcessor(libs.room.compiler)
-    ksp(libs.room.compiler)
+    implementation(libs.androidx.room)
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
