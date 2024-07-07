@@ -1,14 +1,7 @@
 package ca.tetervak.stackdata
 
 import android.app.Application
-import ca.tetervak.stackdata.data.DataContainer
+import dagger.hilt.android.HiltAndroidApp
 
-class StackDataApplication: Application(){
-
-    lateinit var container: DataContainer
-
-    override fun onCreate() {
-        super.onCreate()
-        container = DataContainer(this)
-    }
-}
+@HiltAndroidApp
+class StackDataApplication: Application()
