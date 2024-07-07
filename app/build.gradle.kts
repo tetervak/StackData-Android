@@ -83,3 +83,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
+}
